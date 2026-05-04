@@ -6,9 +6,9 @@ import { motion } from 'framer-motion'
 import { Search, ArrowRight, Star, Users, Briefcase, TrendingUp, CheckCircle, Zap } from 'lucide-react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { JOB_CATEGORIES } from '../../data/dummyData'
-import { useAppStore } from '../../store/appStore'
-import JobCard from '../../components/jobs/JobCard'
+import { JOB_CATEGORIES } from '../data/dummyData'
+import { useAppStore } from '../store/appStore'
+import JobCard from '../components/jobs/JobCard'
 
 const STATS = [
     { icon: <Briefcase size={22} />, value: '24K+', label: 'Jobs Posted' },
