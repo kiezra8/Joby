@@ -14,6 +14,29 @@ import { DUMMY_USERS } from '../data/dummyData'
 
 const HERO_IMAGE = 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=1920&h=1080&fit=crop';
 
+const FEATURES = [
+    {
+        title: 'Verified Profiles',
+        desc: 'Every employer and talent profile is verified to ensure a safe and trustworthy environment.',
+        icon: 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=300&h=300&fit=crop'
+    },
+    {
+        title: 'Smart Matching',
+        desc: 'Our AI-powered algorithm connects you with the most relevant opportunities and candidates.',
+        icon: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=300&h=300&fit=crop'
+    },
+    {
+        title: 'Instant Messaging',
+        desc: 'Communicate directly with hiring managers or candidates through our built-in chat system.',
+        icon: 'https://images.unsplash.com/photo-1577563906417-45a11b3f9f7c?w=300&h=300&fit=crop'
+    },
+    {
+        title: 'Career Growth',
+        desc: 'Access exclusive resources and insights to help you level up your career or business.',
+        icon: 'https://images.unsplash.com/photo-1454165833767-027ff33027ef?w=300&h=300&fit=crop'
+    }
+];
+
 export default function LandingPage() {
     const navigate = useNavigate()
     const { jobs } = useAppStore()
