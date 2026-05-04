@@ -1,11 +1,11 @@
 /**
- * Navbar – top navigation bar with auth state, notifications, and dark mode toggle.
+ * Navbar – top navigation bar with auth state and notifications.
  */
 import { useState, useRef, useEffect } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-    Briefcase, Bell, Sun, Moon, Menu, X, ChevronDown,
+    Briefcase, Bell, Menu, X, ChevronDown,
     User, LayoutDashboard, LogOut, MessageSquare, Settings,
     Plus, ClipboardList
 } from 'lucide-react'
@@ -13,7 +13,7 @@ import { useAuthStore } from '../../store/authStore'
 import { useAppStore } from '../../store/appStore'
 import { getInitials, timeAgo } from '../../utils/helpers'
 
-export default function Navbar({ darkMode, onToggleDark }) {
+export default function Navbar() {
     const { isAuthenticated, user, logout } = useAuthStore()
     const { getNotificationsByUser, markAllRead } = useAppStore()
     const navigate = useNavigate()
@@ -57,7 +57,7 @@ export default function Navbar({ darkMode, onToggleDark }) {
     const isActive = (path) => location.pathname === path
 
     return (
-        <nav className="sticky top-0 z-50 bg-white/80 dark:bg-surface-900/80 backdrop-blur-xl border-b border-surface-200/60 dark:border-surface-700/40">
+        <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-surface-200/60">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
 
@@ -66,7 +66,7 @@ export default function Navbar({ darkMode, onToggleDark }) {
                         <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center shadow-glow group-hover:shadow-glow-lg transition-shadow">
                             <Briefcase size={18} className="text-white" strokeWidth={2.5} />
                         </div>
-                        <span className="text-xl font-black font-display text-surface-900 dark:text-white tracking-tight">
+                        <span className="text-xl font-black font-display text-surface-900 tracking-tight">
                             JO<span className="text-gradient">BY</span>
                         </span>
                     </Link>
@@ -79,8 +79,8 @@ export default function Navbar({ darkMode, onToggleDark }) {
                                     key={link.to}
                                     to={link.to}
                                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActive(link.to)
-                                            ? 'bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400'
-                                            : 'text-surface-600 dark:text-surface-300 hover:bg-surface-100 dark:hover:bg-surface-800 hover:text-surface-900 dark:hover:text-white'
+                                            ? 'bg-primary-50 text-primary-600'
+                                            : 'text-surface-600 hover:bg-surface-100 hover:text-surface-900'
                                         }`}
                                 >
                                     {link.label}
@@ -100,7 +100,7 @@ export default function Navbar({ darkMode, onToggleDark }) {
                                 type="text" 
                                 name="search"
                                 placeholder="Search jobs, skills, talent..." 
-                                className="w-full pl-9 pr-4 py-1.5 bg-surface-100 dark:bg-surface-800 border-transparent focus:border-primary-400 focus:bg-white dark:focus:bg-surface-900 rounded-lg text-sm transition-all"
+                                className="w-full pl-9 pr-4 py-1.5 bg-surface-100 border-transparent focus:border-primary-400 focus:bg-white rounded-lg text-sm transition-all text-surface-900"
                             />
                             <svg className="absolute left-3 top-1/2 -translate-y-1/2 text-surface-400 w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -110,21 +110,13 @@ export default function Navbar({ darkMode, onToggleDark }) {
 
                     {/* Right side actions */}
                     <div className="flex items-center gap-2">
-                        {/* Dark mode toggle */}
-                        <button
-                            onClick={onToggleDark}
-                            className="w-9 h-9 rounded-xl flex items-center justify-center text-surface-500 hover:bg-surface-100 dark:hover:bg-surface-800 transition-all"
-                            aria-label="Toggle dark mode"
-                        >
-                            {darkMode ? <Sun size={18} /> : <Moon size={18} />}
-                        </button>
 
                         {isAuthenticated ? (
                             <>
                                 {/* Messages */}
                                 <Link
                                     to="/messages"
-                                    className="w-9 h-9 rounded-xl flex items-center justify-center text-surface-500 hover:bg-surface-100 dark:hover:bg-surface-800 transition-all"
+                                    className="w-9 h-9 rounded-xl flex items-center justify-center text-surface-500 hover:bg-surface-100 transition-all"
                                 >
                                     <MessageSquare size={18} />
                                 </Link>
@@ -133,7 +125,7 @@ export default function Navbar({ darkMode, onToggleDark }) {
                                 <div className="relative" ref={notifRef}>
                                     <button
                                         onClick={() => { setNotifOpen(o => !o); setProfileOpen(false) }}
-                                        className="w-9 h-9 rounded-xl flex items-center justify-center text-surface-500 hover:bg-surface-100 dark:hover:bg-surface-800 transition-all relative"
+                                        className="w-9 h-9 rounded-xl flex items-center justify-center text-surface-500 hover:bg-surface-100 transition-all relative"
                                     >
                                         <Bell size={18} />
                                         {unread > 0 && (
@@ -150,10 +142,10 @@ export default function Navbar({ darkMode, onToggleDark }) {
                                                 animate={{ opacity: 1, y: 0, scale: 1 }}
                                                 exit={{ opacity: 0, y: 8, scale: 0.95 }}
                                                 transition={{ duration: 0.15 }}
-                                                className="absolute right-0 mt-2 w-80 card shadow-card-hover z-50 overflow-hidden"
+                                                className="absolute right-0 mt-2 w-80 card shadow-card-hover z-50 overflow-hidden bg-white border border-surface-100"
                                             >
-                                                <div className="flex items-center justify-between p-4 border-b border-surface-100 dark:border-surface-700">
-                                                    <h3 className="font-semibold text-sm">Notifications</h3>
+                                                <div className="flex items-center justify-between p-4 border-b border-surface-100">
+                                                    <h3 className="font-semibold text-sm text-surface-900">Notifications</h3>
                                                     {unread > 0 && (
                                                         <button
                                                             onClick={() => markAllRead(user.id)}
@@ -170,9 +162,9 @@ export default function Navbar({ darkMode, onToggleDark }) {
                                                         notifications.slice(0, 10).map(n => (
                                                             <div
                                                                 key={n.id}
-                                                                className={`px-4 py-3 border-b border-surface-100 dark:border-surface-700/50 last:border-0 ${!n.read ? 'bg-primary-50/50 dark:bg-primary-900/10' : ''}`}
+                                                                className={`px-4 py-3 border-b border-surface-100 last:border-0 ${!n.read ? 'bg-primary-50/50' : ''}`}
                                                             >
-                                                                <p className={`text-xs leading-relaxed ${!n.read ? 'text-surface-800 dark:text-surface-100 font-medium' : 'text-surface-500 dark:text-surface-400'}`}>
+                                                                <p className={`text-xs leading-relaxed ${!n.read ? 'text-surface-800 font-medium' : 'text-surface-500'}`}>
                                                                     {n.message}
                                                                 </p>
                                                                 <p className="text-[10px] text-surface-400 mt-1">{timeAgo(n.createdAt)}</p>
@@ -189,11 +181,11 @@ export default function Navbar({ darkMode, onToggleDark }) {
                                 <div className="relative" ref={profileRef}>
                                     <button
                                         onClick={() => { setProfileOpen(o => !o); setNotifOpen(false) }}
-                                        className="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-xl hover:bg-surface-100 dark:hover:bg-surface-800 transition-all"
+                                        className="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-xl hover:bg-surface-100 transition-all"
                                     >
                                         {user?.avatar || user?.logo ? (
                                             <img src={user.avatar || user.logo} alt={user.name}
-                                                className="w-7 h-7 rounded-full object-cover ring-2 ring-primary-200 dark:ring-primary-800" />
+                                                className="w-7 h-7 rounded-full object-cover ring-2 ring-primary-200" />
                                         ) : (
                                             <div className="w-7 h-7 rounded-full bg-gradient-to-br from-primary-400 to-accent-500 flex items-center justify-center text-white text-xs font-bold">
                                                 {getInitials(user?.name || 'U')}
@@ -209,9 +201,9 @@ export default function Navbar({ darkMode, onToggleDark }) {
                                                 animate={{ opacity: 1, y: 0, scale: 1 }}
                                                 exit={{ opacity: 0, y: 8, scale: 0.95 }}
                                                 transition={{ duration: 0.15 }}
-                                                className="absolute right-0 mt-2 w-56 card shadow-card-hover z-50 py-1 overflow-hidden"
+                                                className="absolute right-0 mt-2 w-56 card shadow-card-hover z-50 py-1 overflow-hidden bg-white border border-surface-100"
                                             >
-                                                <div className="px-4 py-3 border-b border-surface-100 dark:border-surface-700">
+                                                <div className="px-4 py-3 border-b border-surface-100 text-surface-900">
                                                     <p className="font-semibold text-sm truncate">{user?.name}</p>
                                                     <p className="text-xs text-surface-500 capitalize">{user?.role}</p>
                                                 </div>
@@ -229,10 +221,10 @@ export default function Navbar({ darkMode, onToggleDark }) {
                                                         <DropItem icon={<ClipboardList size={15} />} label="My Applications" to="/my-applications" onClick={() => setProfileOpen(false)} />
                                                     )}
                                                 </div>
-                                                <div className="border-t border-surface-100 dark:border-surface-700 py-1">
+                                                <div className="border-t border-surface-100 py-1">
                                                     <button
                                                         onClick={handleLogout}
-                                                        className="w-full flex items-center gap-3 px-4 py-2 text-sm text-danger hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+                                                        className="w-full flex items-center gap-3 px-4 py-2 text-sm text-danger hover:bg-red-50 transition-colors"
                                                     >
                                                         <LogOut size={15} /> Sign Out
                                                     </button>
@@ -252,7 +244,7 @@ export default function Navbar({ darkMode, onToggleDark }) {
                         {/* Mobile menu toggle */}
                         <button
                             onClick={() => setMobileOpen(o => !o)}
-                            className="md:hidden w-9 h-9 rounded-xl flex items-center justify-center text-surface-500 hover:bg-surface-100 dark:hover:bg-surface-800"
+                            className="md:hidden w-9 h-9 rounded-xl flex items-center justify-center text-surface-500 hover:bg-surface-100"
                         >
                             {mobileOpen ? <X size={20} /> : <Menu size={20} />}
                         </button>
@@ -266,7 +258,7 @@ export default function Navbar({ darkMode, onToggleDark }) {
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: 'auto' }}
                             exit={{ opacity: 0, height: 0 }}
-                            className="md:hidden border-t border-surface-200 dark:border-surface-700 py-3 space-y-1 overflow-hidden"
+                            className="md:hidden border-t border-surface-200 py-3 space-y-1 overflow-hidden bg-white"
                         >
                             {navLinks.map(link => (
                                 <Link
@@ -274,8 +266,8 @@ export default function Navbar({ darkMode, onToggleDark }) {
                                     to={link.to}
                                     onClick={() => setMobileOpen(false)}
                                     className={`block px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${isActive(link.to)
-                                            ? 'bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400'
-                                            : 'text-surface-600 dark:text-surface-300 hover:bg-surface-100 dark:hover:bg-surface-800'
+                                            ? 'bg-primary-50 text-primary-600'
+                                            : 'text-surface-600 hover:bg-surface-100'
                                         }`}
                                 >
                                     {link.label}
@@ -283,7 +275,7 @@ export default function Navbar({ darkMode, onToggleDark }) {
                             ))}
                             {!isAuthenticated && (
                                 <div className="flex gap-2 pt-2">
-                                    <Link to="/login" onClick={() => setMobileOpen(false)} className="flex-1 btn-secondary btn text-sm justify-center">Sign In</Link>
+                                    <Link to="/login" onClick={() => setMobileOpen(false)} className="flex-1 btn-secondary btn text-sm justify-center text-surface-900 bg-white">Sign In</Link>
                                     <Link to="/register" onClick={() => setMobileOpen(false)} className="flex-1 btn-primary btn text-sm justify-center">Get Started</Link>
                                 </div>
                             )}
@@ -300,7 +292,7 @@ function DropItem({ icon, label, to, onClick }) {
         <Link
             to={to}
             onClick={onClick}
-            className="flex items-center gap-3 px-4 py-2 text-sm text-surface-600 dark:text-surface-300 hover:bg-surface-100 dark:hover:bg-surface-800 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+            className="flex items-center gap-3 px-4 py-2 text-sm text-surface-600 hover:bg-surface-100 hover:text-primary-600 transition-colors"
         >
             {icon} {label}
         </Link>

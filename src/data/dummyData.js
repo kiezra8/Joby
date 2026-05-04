@@ -3,19 +3,32 @@
  * Covers multiple industries, both employer and seeker profiles.
  */
 
+export const PINTEREST_IMAGES = [
+    'https://i.pinimg.com/736x/f4/c0/27/f4c0271289275fe3cfdef89eb16d9f5e.jpg',
+    'https://i.pinimg.com/736x/7f/e0/33/7fe0334627135176b819b02a397bda27.jpg',
+    'https://i.pinimg.com/1200x/0f/8c/87/0f8c8796df20ab23108a842ee1d01439.jpg',
+    'https://i.pinimg.com/1200x/9b/49/7d/9b497df3cd94d7872eb05882b52dc4d1.jpg',
+    'https://i.pinimg.com/736x/c2/bd/78/c2bd78ee39e885e7be5a4c1b3ff5d59f.jpg',
+    'https://i.pinimg.com/1200x/a8/62/2a/a8622ae5703fb1e8181c714f00ff1347.jpg',
+    'https://i.pinimg.com/1200x/87/7a/2f/877a2f42ff08e2536d7c29c71036db85.jpg',
+    'https://i.pinimg.com/736x/18/64/04/186404a3f274a14c7073d4238a096c8d.jpg',
+    'https://i.pinimg.com/736x/74/b5/6c/74b56c964d47c047d296b659cb9b49c2.jpg',
+    'https://i.pinimg.com/736x/f8/cd/23/f8cd233dc5c449c27d0b2a415f12e08f.jpg'
+];
+
 export const JOB_CATEGORIES = [
-    { id: 'tech', label: 'Technology', icon: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=100&h=100&fit=crop', color: 'bg-blue-100 text-blue-700' },
-    { id: 'healthcare', label: 'Healthcare', icon: 'https://images.unsplash.com/photo-1505751172107-5739a007721d?w=100&h=100&fit=crop', color: 'bg-red-100 text-red-700' },
-    { id: 'finance', label: 'Finance', icon: 'https://images.unsplash.com/photo-1550565118-3a14e8d0386f?w=100&h=100&fit=crop', color: 'bg-green-100 text-green-700' },
-    { id: 'education', label: 'Education', icon: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=100&h=100&fit=crop', color: 'bg-yellow-100 text-yellow-700' },
-    { id: 'engineering', label: 'Engineering', icon: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=100&h=100&fit=crop', color: 'bg-orange-100 text-orange-700' },
-    { id: 'marketing', label: 'Marketing', icon: 'https://images.unsplash.com/photo-1533750516457-a7f992034fce?w=100&h=100&fit=crop', color: 'bg-pink-100 text-pink-700' },
-    { id: 'design', label: 'Design', icon: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=100&h=100&fit=crop', color: 'bg-purple-100 text-purple-700' },
-    { id: 'legal', label: 'Legal', icon: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=100&h=100&fit=crop', color: 'bg-indigo-100 text-indigo-700' },
-    { id: 'hospitality', label: 'Hospitality', icon: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=100&h=100&fit=crop', color: 'bg-teal-100 text-teal-700' },
-    { id: 'construction', label: 'Construction', icon: 'https://images.unsplash.com/photo-1503387762-592dea58ef23?w=100&h=100&fit=crop', color: 'bg-amber-100 text-amber-700' },
-    { id: 'sales', label: 'Sales', icon: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=100&h=100&fit=crop', color: 'bg-cyan-100 text-cyan-700' },
-    { id: 'remote', label: 'Remote-First', icon: 'https://images.unsplash.com/photo-1586282391129-56a991af5c80?w=100&h=100&fit=crop', color: 'bg-violet-100 text-violet-700' },
+    { id: 'tech', label: 'Technology', icon: PINTEREST_IMAGES[0], color: 'bg-blue-100 text-blue-700' },
+    { id: 'healthcare', label: 'Healthcare', icon: PINTEREST_IMAGES[1], color: 'bg-red-100 text-red-700' },
+    { id: 'finance', label: 'Finance', icon: PINTEREST_IMAGES[2], color: 'bg-green-100 text-green-700' },
+    { id: 'education', label: 'Education', icon: PINTEREST_IMAGES[3], color: 'bg-yellow-100 text-yellow-700' },
+    { id: 'engineering', label: 'Engineering', icon: PINTEREST_IMAGES[4], color: 'bg-orange-100 text-orange-700' },
+    { id: 'marketing', label: 'Marketing', icon: PINTEREST_IMAGES[5], color: 'bg-pink-100 text-pink-700' },
+    { id: 'design', label: 'Design', icon: PINTEREST_IMAGES[6], color: 'bg-purple-100 text-purple-700' },
+    { id: 'legal', label: 'Legal', icon: PINTEREST_IMAGES[7], color: 'bg-indigo-100 text-indigo-700' },
+    { id: 'hospitality', label: 'Hospitality', icon: PINTEREST_IMAGES[8], color: 'bg-teal-100 text-teal-700' },
+    { id: 'construction', label: 'Construction', icon: PINTEREST_IMAGES[9], color: 'bg-amber-100 text-amber-700' },
+    { id: 'sales', label: 'Sales', icon: PINTEREST_IMAGES[0], color: 'bg-cyan-100 text-cyan-700' },
+    { id: 'remote', label: 'Remote-First', icon: PINTEREST_IMAGES[1], color: 'bg-violet-100 text-violet-700' },
 ]
 
 export const JOB_TYPES = [
@@ -35,7 +48,7 @@ export const DUMMY_USERS = [
         role: 'employer',
         name: 'TechCorp Inc.',
         companyName: 'TechCorp Inc.',
-        logo: 'https://ui-avatars.com/api/?name=TechCorp&background=6366f1&color=fff&size=128',
+        logo: PINTEREST_IMAGES[2],
         description: 'Leading software house building next-gen SaaS products used by millions worldwide.',
         website: 'https://techcorp.io',
         location: 'San Francisco, CA',
@@ -51,7 +64,7 @@ export const DUMMY_USERS = [
         role: 'employer',
         name: 'HealthPlus Hospital',
         companyName: 'HealthPlus Hospital',
-        logo: 'https://ui-avatars.com/api/?name=HealthPlus&background=ef4444&color=fff&size=128',
+        logo: PINTEREST_IMAGES[3],
         description: 'A world-class medical institution committed to compassionate patient care and research excellence.',
         website: 'https://healthplus.com',
         location: 'New York, NY',
@@ -67,7 +80,7 @@ export const DUMMY_USERS = [
         role: 'employer',
         name: 'BuildRight Construction',
         companyName: 'BuildRight Construction',
-        logo: 'https://ui-avatars.com/api/?name=BuildRight&background=f59e0b&color=fff&size=128',
+        logo: PINTEREST_IMAGES[4],
         description: 'Award-winning construction firm specialising in commercial and residential projects.',
         website: 'https://buildright.co',
         location: 'Austin, TX',
@@ -85,7 +98,7 @@ export const DUMMY_USERS = [
         name: 'Alice Johnson',
         title: 'Senior Full-Stack Developer',
         bio: 'Passionate engineer with 7+ years of experience building scalable web applications. Open to remote and hybrid opportunities.',
-        avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&h=150&fit=crop',
+        avatar: PINTEREST_IMAGES[5],
         skills: ['React', 'Node.js', 'TypeScript', 'GraphQL', 'AWS', 'Docker'],
         experience: [
             { company: 'Google', role: 'Software Engineer', from: '2021', to: '2024' },
@@ -101,9 +114,9 @@ export const DUMMY_USERS = [
         category: 'tech',
         featured: true,
         portfolioImages: [
-            'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=300&fit=crop',
-            'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=300&fit=crop',
-            'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=400&h=300&fit=crop'
+            PINTEREST_IMAGES[6],
+            PINTEREST_IMAGES[7],
+            PINTEREST_IMAGES[8]
         ],
         location: 'Remote',
         createdAt: '2024-01-20T08:00:00Z',
@@ -116,7 +129,7 @@ export const DUMMY_USERS = [
         name: 'Bob Martinez',
         title: 'Registered Nurse (RN)',
         bio: 'Experienced RN with 5 years in emergency and critical care. Looking for hospital or clinic positions.',
-        avatar: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=150&h=150&fit=crop',
+        avatar: PINTEREST_IMAGES[9],
         skills: ['Patient Care', 'ICU', 'Triage', 'Medication Administration', 'EMR Systems'],
         experience: [
             { company: 'City General Hospital', role: 'Emergency Nurse', from: '2019', to: '2024' },
@@ -131,8 +144,8 @@ export const DUMMY_USERS = [
         category: 'healthcare',
         featured: true,
         portfolioImages: [
-            'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&h=300&fit=crop',
-            'https://images.unsplash.com/photo-1584515868536-3993a46a55b5?w=400&h=300&fit=crop'
+            PINTEREST_IMAGES[0],
+            PINTEREST_IMAGES[1]
         ],
         location: 'New York, NY',
         createdAt: '2024-01-22T08:00:00Z',
@@ -145,7 +158,7 @@ export const DUMMY_USERS = [
         name: 'Sarah Chen',
         title: 'Creative Art Director',
         bio: 'Award-winning designer with a focus on brand identity and digital experience.',
-        avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&h=150&fit=crop',
+        avatar: PINTEREST_IMAGES[2],
         skills: ['Art Direction', 'Branding', 'Figma', 'Adobe Suite', 'Illustration'],
         experience: [
             { company: 'Pentagram', role: 'Senior Designer', from: '2020', to: '2024' },
@@ -161,8 +174,8 @@ export const DUMMY_USERS = [
         category: 'design',
         featured: true,
         portfolioImages: [
-            'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=300&fit=crop',
-            'https://images.unsplash.com/photo-1558655146-d09347e92766?w=400&h=300&fit=crop'
+            PINTEREST_IMAGES[3],
+            PINTEREST_IMAGES[4]
         ],
         location: 'Los Angeles, CA',
         createdAt: '2024-02-05T08:00:00Z',
@@ -175,7 +188,7 @@ export const DUMMY_USERS = [
         name: 'James Wilson',
         title: 'Financial Analyst',
         bio: 'CFA charterholder with 6 years of experience in investment banking and corporate finance.',
-        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop',
+        avatar: PINTEREST_IMAGES[5],
         skills: ['Financial Modeling', 'Valuation', 'SQL', 'Python', 'Excel'],
         experience: [
             { company: 'Goldman Sachs', role: 'Analyst', from: '2018', to: '2024' },
@@ -200,7 +213,7 @@ export const DUMMY_JOBS = [
         id: 'job-001',
         employerId: 'emp-001',
         employerName: 'TechCorp Inc.',
-        employerLogo: 'https://ui-avatars.com/api/?name=TechCorp&background=6366f1&color=fff&size=128',
+        employerLogo: PINTEREST_IMAGES[2],
         title: 'Senior React Developer',
         category: 'tech',
         type: 'full-time',
@@ -230,7 +243,7 @@ export const DUMMY_JOBS = [
         id: 'job-002',
         employerId: 'emp-001',
         employerName: 'TechCorp Inc.',
-        employerLogo: 'https://ui-avatars.com/api/?name=TechCorp&background=6366f1&color=fff&size=128',
+        employerLogo: PINTEREST_IMAGES[2],
         title: 'DevOps Engineer',
         category: 'tech',
         type: 'full-time',
@@ -258,7 +271,7 @@ export const DUMMY_JOBS = [
         id: 'job-003',
         employerId: 'emp-002',
         employerName: 'HealthPlus Hospital',
-        employerLogo: 'https://ui-avatars.com/api/?name=HealthPlus&background=ef4444&color=fff&size=128',
+        employerLogo: PINTEREST_IMAGES[3],
         title: 'Emergency Room Registered Nurse',
         category: 'healthcare',
         type: 'full-time',
@@ -286,7 +299,7 @@ export const DUMMY_JOBS = [
         id: 'job-004',
         employerId: 'emp-002',
         employerName: 'HealthPlus Hospital',
-        employerLogo: 'https://ui-avatars.com/api/?name=HealthPlus&background=ef4444&color=fff&size=128',
+        employerLogo: PINTEREST_IMAGES[3],
         title: 'Medical Data Analyst',
         category: 'healthcare',
         type: 'part-time',
@@ -309,7 +322,7 @@ export const DUMMY_JOBS = [
         id: 'job-005',
         employerId: 'emp-003',
         employerName: 'BuildRight Construction',
-        employerLogo: 'https://ui-avatars.com/api/?name=BuildRight&background=f59e0b&color=fff&size=128',
+        employerLogo: PINTEREST_IMAGES[4],
         title: 'Site Project Manager',
         category: 'construction',
         type: 'contract',
@@ -332,7 +345,7 @@ export const DUMMY_JOBS = [
         id: 'job-006',
         employerId: 'emp-001',
         employerName: 'TechCorp Inc.',
-        employerLogo: 'https://ui-avatars.com/api/?name=TechCorp&background=6366f1&color=fff&size=128',
+        employerLogo: PINTEREST_IMAGES[2],
         title: 'UX/UI Designer',
         category: 'design',
         type: 'full-time',
@@ -358,23 +371,32 @@ export const DUMMY_JOBS = [
     },
 ]
 
+const firstNames = ['James', 'Emma', 'Michael', 'Olivia', 'William', 'Ava', 'Alexander', 'Sophia', 'Matthew', 'Isabella', 'Daniel', 'Mia', 'Joseph', 'Charlotte', 'David', 'Amelia', 'Henry', 'Harper', 'Jackson', 'Evelyn'];
+const lastNames = ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez', 'Martinez', 'Hernandez', 'Lopez', 'Gonzalez', 'Wilson', 'Anderson', 'Thomas', 'Taylor', 'Moore', 'Jackson', 'Martin'];
+const jobTitlesPrefix = ['Senior', 'Lead', 'Chief', 'Principal', 'Junior', 'Associate', 'Executive', 'Expert'];
+const companyNames = ['Global Corp', 'TechFlow', 'InnovateX', 'Apex Solutions', 'Nexus Systems', 'Quantum Dynamics', 'Zenith Enterprises', 'Aura Consulting'];
+
 // Auto-generate missing data to ensure each category has at least 3 jobs and 3 professionals
 JOB_CATEGORIES.forEach(cat => {
     const existingSeekers = DUMMY_USERS.filter(u => u.role === 'seeker' && u.category === cat.id);
     const existingJobs = DUMMY_JOBS.filter(j => j.category === cat.id);
     
     for (let i = existingSeekers.length; i < 3; i++) {
+        const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+        const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+        const prefix = jobTitlesPrefix[Math.floor(Math.random() * jobTitlesPrefix.length)];
+        
         DUMMY_USERS.push({
             id: `auto-seek-${cat.id}-${i}`,
             email: `auto-${cat.id}-${i}@example.com`,
             password: 'password',
             role: 'seeker',
-            name: `${cat.label} Professional ${i+1}`,
-            title: `Experienced ${cat.label} Specialist`,
+            name: `${firstName} ${lastName}`,
+            title: `${prefix} ${cat.label} Specialist`,
             bio: `Highly skilled professional in the ${cat.label} sector with a proven track record.`,
-            avatar: `https://images.unsplash.com/photo-${1500000000000 + (Math.random() * 100000000).toFixed(0)}?w=150&h=150&fit=crop`,
+            avatar: PINTEREST_IMAGES[Math.floor(Math.random() * PINTEREST_IMAGES.length)],
             skills: [cat.label, 'Communication', 'Leadership', 'Problem Solving'],
-            experience: [{ company: 'Global Corp', role: 'Specialist', from: '2019', to: '2024' }],
+            experience: [{ company: companyNames[Math.floor(Math.random() * companyNames.length)], role: `${cat.label} Specialist`, from: '2019', to: '2024' }],
             education: [{ institution: 'State University', degree: `B.A. ${cat.label}`, year: '2019' }],
             verified: true,
             rating: Number((4.0 + (i * 0.3)).toFixed(1)),
@@ -383,7 +405,7 @@ JOB_CATEGORIES.forEach(cat => {
             category: cat.id,
             featured: false,
             portfolioImages: [
-                'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400&h=300&fit=crop'
+                PINTEREST_IMAGES[Math.floor(Math.random() * PINTEREST_IMAGES.length)]
             ],
             location: 'Remote',
             createdAt: new Date().toISOString(),
@@ -391,12 +413,15 @@ JOB_CATEGORIES.forEach(cat => {
     }
 
     for (let i = existingJobs.length; i < 3; i++) {
+        const prefix = jobTitlesPrefix[Math.floor(Math.random() * jobTitlesPrefix.length)];
+        const company = companyNames[Math.floor(Math.random() * companyNames.length)];
+        
         DUMMY_JOBS.push({
             id: `auto-job-${cat.id}-${i}`,
             employerId: 'emp-001',
-            employerName: 'AutoTech Inc.',
-            employerLogo: 'https://ui-avatars.com/api/?name=AutoTech&background=6366f1&color=fff&size=128',
-            title: `${cat.label} Role Needed`,
+            employerName: company,
+            employerLogo: PINTEREST_IMAGES[Math.floor(Math.random() * PINTEREST_IMAGES.length)],
+            title: `${prefix} ${cat.label} Expert Needed`,
             category: cat.id,
             type: 'full-time',
             location: 'Remote',

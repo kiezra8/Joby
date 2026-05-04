@@ -1,7 +1,7 @@
 /**
  * App.jsx – Root component with routing and theme management.
  */
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import { useEffect, useState } from 'react'
 import { useAuthStore } from './store/authStore'
@@ -28,28 +28,14 @@ import Navbar from './components/layout/Navbar'
 import Footer from './components/layout/Footer'
 import ProtectedRoute from './components/auth/ProtectedRoute'
 
-function App() {
+function AppContent() {
     const { isAuthenticated, user } = useAuthStore()
-    const [darkMode, setDarkMode] = useState(() => {
-        return localStorage.getItem('joby-theme') === 'dark'
-    })
-
-    useEffect(() => {
-        const root = document.documentElement
-        if (darkMode) {
-            root.classList.add('dark')
-            localStorage.setItem('joby-theme', 'dark')
-        } else {
-            root.classList.remove('dark')
-            localStorage.setItem('joby-theme', 'light')
-        }
-    }, [darkMode])
 
     return (
-        <BrowserRouter>
-            <div className="min-h-screen bg-surface-50 dark:bg-surface-950 transition-colors duration-300">
-                <Navbar darkMode={darkMode} onToggleDark={() => setDarkMode(d => !d)} />
+        <div className="min-h-screen transition-colors duration-300 dark bg-surface-950 text-surface-100">
+            <Navbar />
 
+            <div className="dark flex-1">
                 <Routes>
                     {/* Public routes */}
                     <Route path="/" element={<LandingPage />} />
@@ -92,23 +78,36 @@ function App() {
                 </Routes>
 
                 <Footer />
-
-                {/* Global Toast notifications */}
-                <Toaster
-                    position="top-right"
-                    toastOptions={{
-                        duration: 4000,
-                        style: {
-                            background: darkMode ? '#1e293b' : '#fff',
-                            color: darkMode ? '#f1f5f9' : '#0f172a',
-                            border: `1px solid ${darkMode ? '#334155' : '#e2e8f0'}`,
-                            borderRadius: '12px',
-                            fontSize: '14px',
-                            fontWeight: '500',
-                        },
-                    }}
-                />
             </div>
+
+            {/* Global Toast notifications */}
+            <Toaster
+                position="top-right"
+                toastOptions={{
+                    duration: 4000,
+                    style: {
+                        background: '#1e293b',
+                        color: '#f1f5f9',
+                        border: '1px solid #334155',
+                        borderRadius: '12px',
+                        fontSize: '14px',
+                        fontWeight: '500',
+                    },
+                }}
+            />
+        </div>
+    )
+}
+
+function App() {
+    // Remove global dark mode class that might have been applied to document root, we use the wrapper class
+    useEffect(() => {
+        document.documentElement.classList.remove('dark')
+    }, [])
+
+    return (
+        <BrowserRouter>
+            <AppContent />
         </BrowserRouter>
     )
 }
