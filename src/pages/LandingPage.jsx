@@ -9,6 +9,8 @@ import { useNavigate } from 'react-router-dom'
 import { JOB_CATEGORIES } from '../data/dummyData'
 import { useAppStore } from '../store/appStore'
 import JobCard from '../components/jobs/JobCard'
+import SeekerCard from '../components/seeker/SeekerCard'
+import { DUMMY_USERS } from '../data/dummyData'
 
 const HERO_IMAGES = [
     { url: '/images/hero/hero_dev.png', title: 'Tech Professionals' },
@@ -47,7 +49,7 @@ export default function LandingPage() {
     return (
         <div className="overflow-x-hidden">
             {/* ===== HERO ===== */}
-            <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-surface-950">
+            <section className="relative h-[65vh] min-h-[500px] flex items-center overflow-hidden bg-surface-900">
                 {/* Carousel Background */}
                 <div className="absolute inset-0">
                     {HERO_IMAGES.map((img, idx) => (
@@ -63,7 +65,6 @@ export default function LandingPage() {
                                 alt={img.title}
                                 className="w-full h-full object-cover scale-105"
                             />
-                            <div className="carousel-overlay" />
                         </motion.div>
                     ))}
                 </div>
@@ -205,6 +206,42 @@ export default function LandingPage() {
                     <div className="text-center mt-8 sm:hidden">
                         <Link to="/jobs" className="btn-primary btn">
                             View All Jobs <ArrowRight size={16} />
+                        </Link>
+                    </div>
+                </div>
+            </section>
+
+            {/* ===== FEATURED CANDIDATES ===== */}
+            <section className="py-20">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="flex items-end justify-between mb-12"
+                    >
+                        <div>
+                            <h2 className="section-title">Top Talent</h2>
+                            <p className="section-subtitle">Highly skilled professionals ready for their next challenge</p>
+                        </div>
+                        <Link to="/jobs?tab=talent" className="btn-secondary btn hidden sm:flex">
+                            Browse All Talent <ArrowRight size={14} />
+                        </Link>
+                    </motion.div>
+
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        {DUMMY_USERS
+                            .filter(u => u.role === 'seeker' && u.featured)
+                            .slice(0, 4)
+                            .map((seeker, i) => (
+                                <SeekerCard key={seeker.id} seeker={seeker} index={i} />
+                            ))
+                        }
+                    </div>
+
+                    <div className="text-center mt-10 sm:hidden">
+                        <Link to="/jobs?tab=talent" className="btn-secondary btn">
+                            Browse All Talent <ArrowRight size={14} />
                         </Link>
                     </div>
                 </div>

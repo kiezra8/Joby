@@ -163,6 +163,15 @@ export default function JobDetailPage() {
                             </button>
                         )}
 
+                        <a 
+                            href={`https://wa.me/256754278976?text=Hi,%20I'm%20interested%20in%20the%20${encodeURIComponent(job.title)}%20role%20at%20${encodeURIComponent(job.employerName)}!`}
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="btn bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 w-full mt-3 gap-2"
+                        >
+                            WhatsApp Employer
+                        </a>
+
                         <button onClick={handleShare} className="btn-secondary btn w-full mt-3 gap-2">
                             <Share2 size={16} /> Share Job
                         </button>

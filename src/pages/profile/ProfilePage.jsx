@@ -3,7 +3,7 @@
  */
 import { useParams, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { MapPin, Star, CheckCircle, Briefcase, GraduationCap, MessageSquare, ArrowLeft, Shield } from 'lucide-react'
+import { MapPin, Star, CheckCircle, Briefcase, GraduationCap, MessageSquare, ArrowLeft, Shield, ExternalLink } from 'lucide-react'
 import { useAppStore } from '../../store/appStore'
 import { useAuthStore } from '../../store/authStore'
 import { formatSalary, timeAgo } from '../../utils/helpers'
@@ -79,9 +79,24 @@ export default function ProfilePage() {
                         )}
 
                         {!isMe && me && (
-                            <Link to="/messages" className="btn-primary btn w-full mt-5 gap-2">
-                                <MessageSquare size={15} /> Send Message
-                            </Link>
+                            <div className="space-y-2 mt-5">
+                                <a 
+                                    href={`https://wa.me/256754278976?text=Hi%20${encodeURIComponent(profile.name)},%20I'd%20like%20to%20connect%20with%20you%20on%20JOBY!`}
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="btn bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 w-full gap-2"
+                                >
+                                    WhatsApp Contact
+                                </a>
+                                <Link to="/messages" className="btn-secondary btn w-full gap-2">
+                                    <MessageSquare size={15} /> Send Message
+                                </Link>
+                                {profile.cvUrl && (
+                                    <a href={profile.cvUrl} target="_blank" rel="noopener noreferrer" className="btn-secondary btn w-full gap-2">
+                                        <ExternalLink size={15} /> Download CV
+                                    </a>
+                                )}
+                            </div>
                         )}
                         {isMe && (
                             <Link to="/profile/edit" className="btn-secondary btn w-full mt-5">Edit Profile</Link>
@@ -94,6 +109,20 @@ export default function ProfilePage() {
                             <h3 className="font-bold text-surface-900 dark:text-white mb-3">Skills</h3>
                             <div className="flex flex-wrap gap-2">
                                 {profile.skills.map(s => <span key={s} className="chip">{s}</span>)}
+                            </div>
+                        </motion.div>
+                    )}
+
+                    {/* Uploaded Documents & Portfolio Preview */}
+                    {!isEmployer && profile.portfolioImages?.length > 0 && (
+                        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="card p-6">
+                            <h3 className="font-bold text-surface-900 dark:text-white mb-4">Uploaded Documents & Images</h3>
+                            <div className="grid grid-cols-2 gap-2">
+                                {profile.portfolioImages.map((img, i) => (
+                                    <div key={i} className="portfolio-item rounded-lg">
+                                        <img src={img} alt="Work" className="w-full h-full object-cover" />
+                                    </div>
+                                ))}
                             </div>
                         </motion.div>
                     )}

@@ -1,25 +1,35 @@
 /**
  * JobsPage – browse, search, and filter all job listings.
  */
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Search, Filter, X, SlidersHorizontal } from 'lucide-react'
+import { Search, Filter, X, SlidersHorizontal, Briefcase, Users } from 'lucide-react'
 import { useAppStore } from '../../store/appStore'
-import { JOB_CATEGORIES, JOB_TYPES } from '../../data/dummyData'
+import { JOB_CATEGORIES, JOB_TYPES, DUMMY_USERS } from '../../data/dummyData'
 import JobCard from '../../components/jobs/JobCard'
+import SeekerCard from '../../components/seeker/SeekerCard'
 
 export default function JobsPage() {
     const { jobs } = useAppStore()
     const [params, setParams] = useSearchParams()
     const [showFilters, setShowFilters] = useState(false)
+    const [tab, setTab] = useState(params.get('tab') || 'jobs') // 'jobs' or 'talent'
 
     const [q, setQ] = useState(params.get('q') || '')
     const [category, setCategory] = useState(params.get('category') || '')
     const [type, setType] = useState('')
     const [sort, setSort] = useState('newest')
 
-    const filtered = useMemo(() => {
+    // Sync tab with URL
+    useEffect(() => {
+        const urlTab = params.get('tab')
+        if (urlTab && urlTab !== tab) setTab(urlTab)
+    }, [params])
+
+    const seekers = useMemo(() => DUMMY_USERS.filter(u => u.role === 'seeker'), [])
+
+    const filteredJobs = useMemo(() => {
         let result = [...jobs]
         if (q) {
             const lower = q.toLowerCase()
@@ -38,16 +48,55 @@ export default function JobsPage() {
         return result
     }, [jobs, q, category, type, sort])
 
+    const filteredTalent = useMemo(() => {
+        let result = [...seekers]
+        if (q) {
+            const lower = q.toLowerCase()
+            result = result.filter(u =>
+                u.name.toLowerCase().includes(lower) ||
+                u.title.toLowerCase().includes(lower) ||
+                u.skills?.some(s => s.toLowerCase().includes(lower)) ||
+                u.bio.toLowerCase().includes(lower)
+            )
+        }
+        if (category) result = result.filter(u => u.category === category)
+        if (sort === 'newest') result = [...result].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+        if (sort === 'popular') result = [...result].sort((a, b) => b.reviewCount - a.reviewCount)
+        return result
+    }, [seekers, q, category, sort])
+
     const clearFilters = () => { setQ(''); setCategory(''); setType(''); setSort('newest') }
     const hasFilters = q || category || type || sort !== 'newest'
 
     return (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
             {/* Page header */}
-            <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
-                <h1 className="section-title">Browse Jobs</h1>
-                <p className="section-subtitle">{filtered.length} opportunities available</p>
-            </motion.div>
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+                <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
+                    <h1 className="section-title">
+                        {tab === 'jobs' ? 'Browse Jobs' : 'Discover Talent'}
+                    </h1>
+                    <p className="section-subtitle">
+                        {tab === 'jobs' ? `${filteredJobs.length} opportunities available` : `${filteredTalent.length} professionals found`}
+                    </p>
+                </motion.div>
+
+                {/* Tab switcher */}
+                <div className="flex bg-surface-100 dark:bg-surface-800 p-1 rounded-2xl w-fit self-start">
+                    <button
+                        onClick={() => { setTab('jobs'); setParams({ ...Object.fromEntries(params), tab: 'jobs' }) }}
+                        className={`flex items-center gap-2 px-5 py-2 rounded-xl text-sm font-bold transition-all ${tab === 'jobs' ? 'bg-white dark:bg-surface-700 text-primary-600 dark:text-primary-400 shadow-sm' : 'text-surface-500'}`}
+                    >
+                        <Briefcase size={16} /> Jobs
+                    </button>
+                    <button
+                        onClick={() => { setTab('talent'); setParams({ ...Object.fromEntries(params), tab: 'talent' }) }}
+                        className={`flex items-center gap-2 px-5 py-2 rounded-xl text-sm font-bold transition-all ${tab === 'talent' ? 'bg-white dark:bg-surface-700 text-primary-600 dark:text-primary-400 shadow-sm' : 'text-surface-500'}`}
+                    >
+                        <Users size={16} /> Talent
+                    </button>
+                </div>
+            </div>
 
             {/* Search + filter bar */}
             <div className="flex flex-col sm:flex-row gap-3 mb-6">
@@ -57,7 +106,7 @@ export default function JobsPage() {
                         id="job-search"
                         value={q}
                         onChange={e => setQ(e.target.value)}
-                        placeholder="Search job title, skill, company..."
+                        placeholder={tab === 'jobs' ? "Search job title, skill, company..." : "Search name, title, expertise..."}
                         className="input input-lg pl-12"
                     />
                     {q && (
@@ -99,24 +148,26 @@ export default function JobsPage() {
                         >
                             <option value="">All Categories</option>
                             {JOB_CATEGORIES.map(c => (
-                                <option key={c.id} value={c.id}>{c.icon} {c.label}</option>
+                                <option key={c.id} value={c.id}>{c.label}</option>
                             ))}
                         </select>
                     </div>
-                    <div>
-                        <label className="label">Job Type</label>
-                        <select
-                            id="filter-type"
-                            value={type}
-                            onChange={e => setType(e.target.value)}
-                            className="input"
-                        >
-                            <option value="">All Types</option>
-                            {JOB_TYPES.map(t => (
-                                <option key={t.id} value={t.id}>{t.label}</option>
-                            ))}
-                        </select>
-                    </div>
+                    {tab === 'jobs' && (
+                        <div>
+                            <label className="label">Job Type</label>
+                            <select
+                                id="filter-type"
+                                value={type}
+                                onChange={e => setType(e.target.value)}
+                                className="input"
+                            >
+                                <option value="">All Types</option>
+                                {JOB_TYPES.map(t => (
+                                    <option key={t.id} value={t.id}>{t.label}</option>
+                                ))}
+                            </select>
+                        </div>
+                    )}
                     <div>
                         <label className="label">Sort By</label>
                         <select
@@ -126,8 +177,8 @@ export default function JobsPage() {
                             className="input"
                         >
                             <option value="newest">Newest First</option>
-                            <option value="salary">Highest Salary</option>
-                            <option value="popular">Most Applied</option>
+                            {tab === 'jobs' && <option value="salary">Highest Salary</option>}
+                            <option value="popular">Most {tab === 'jobs' ? 'Applied' : 'Reviews'}</option>
                         </select>
                     </div>
                 </motion.div>
@@ -145,24 +196,32 @@ export default function JobsPage() {
                     <button
                         key={c.id}
                         onClick={() => setCategory(cat => cat === c.id ? '' : c.id)}
-                        className={`btn btn-sm gap-1 ${category === c.id ? 'btn-primary' : 'btn-secondary'}`}
+                        className={`btn btn-sm gap-1.5 ${category === c.id ? 'btn-primary' : 'btn-secondary'}`}
                     >
-                        {c.icon} {c.label}
+                        <img src={c.icon} alt="" className="w-3.5 h-3.5 rounded-sm object-cover" />
+                        {c.label}
                     </button>
                 ))}
             </div>
 
             {/* Grid */}
-            {filtered.length === 0 ? (
+            {(tab === 'jobs' ? filteredJobs : filteredTalent).length === 0 ? (
                 <div className="text-center py-24">
-                    <div className="text-5xl mb-4">🔍</div>
-                    <h3 className="text-lg font-semibold text-surface-700 dark:text-surface-300 mb-1">No jobs found</h3>
-                    <p className="text-sm text-surface-400">Try different keywords or clear your filters.</p>
+                    <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-surface-100 dark:bg-surface-800 flex items-center justify-center text-3xl">
+                        🔍
+                    </div>
+                    <h3 className="text-lg font-semibold text-surface-900 dark:text-white mb-1">
+                        No {tab === 'jobs' ? 'jobs' : 'candidates'} found
+                    </h3>
+                    <p className="text-sm text-surface-500">Try different keywords or clear your filters.</p>
                     <button onClick={clearFilters} className="btn-primary btn mt-4 mx-auto">Clear Filters</button>
                 </div>
             ) : (
                 <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
-                    {filtered.map((job, i) => <JobCard key={job.id} job={job} index={i} />)}
+                    {tab === 'jobs' 
+                        ? filteredJobs.map((job, i) => <JobCard key={job.id} job={job} index={i} />)
+                        : filteredTalent.map((seeker, i) => <SeekerCard key={seeker.id} seeker={seeker} index={i} />)
+                    }
                 </div>
             )}
         </div>
