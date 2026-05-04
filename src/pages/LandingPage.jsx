@@ -12,124 +12,61 @@ import JobCard from '../components/jobs/JobCard'
 import SeekerCard from '../components/seeker/SeekerCard'
 import { DUMMY_USERS } from '../data/dummyData'
 
-const HERO_IMAGES = [
-    { url: '/images/hero/hero_dev.png', title: 'Tech Professionals' },
-    { url: '/images/hero/hero_design.png', title: 'Creative Designers' },
-    { url: '/images/hero/hero_engineer.png', title: 'Skilled Engineers' },
-    { url: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=1920&h=1080&fit=crop', title: 'Business Leaders' },
-]
-
-const FEATURES = [
-    { icon: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=100&h=100&fit=crop', title: 'Smart Matching', desc: 'AI-powered recommendations tailored to your skills and preferences.' },
-    { icon: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=100&h=100&fit=crop', title: 'Instant Apply', desc: 'Apply to any job in seconds with your saved profile.' },
-    { icon: 'https://images.unsplash.com/photo-1507679799987-c7377ec48696?w=100&h=100&fit=crop', title: 'Verified Profiles', desc: 'Every employer and seeker is verified for your safety.' },
-    { icon: 'https://images.unsplash.com/photo-1573164713988-8665fc963095?w=100&h=100&fit=crop', title: 'Direct Messaging', desc: 'Chat with employers and candidates in real-time.' },
-]
+const HERO_IMAGE = 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=1920&h=1080&fit=crop';
 
 export default function LandingPage() {
-    const [search, setSearch] = useState('')
-    const [currentHero, setCurrentHero] = useState(0)
     const navigate = useNavigate()
     const { jobs } = useAppStore()
     const featured = jobs.filter(j => j.featured).slice(0, 3)
 
-    // Carousel effect
-    useEffect(() => {
-        const timer = setInterval(() => {
-            setCurrentHero(prev => (prev + 1) % HERO_IMAGES.length)
-        }, 5000)
-        return () => clearInterval(timer)
-    }, [])
-
-    const handleSearch = (e) => {
-        e.preventDefault()
-        navigate(`/jobs?q=${encodeURIComponent(search)}`)
-    }
-
     return (
         <div className="overflow-x-hidden">
             {/* ===== HERO ===== */}
-            <section className="relative h-[65vh] min-h-[500px] flex items-center overflow-hidden bg-surface-900">
-                {/* Carousel Background */}
+            <section className="relative h-[45vh] min-h-[400px] flex items-center overflow-hidden bg-surface-900">
+                {/* Static Background */}
                 <div className="absolute inset-0">
-                    {HERO_IMAGES.map((img, idx) => (
-                        <motion.div
-                            key={idx}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: currentHero === idx ? 1 : 0 }}
-                            transition={{ duration: 1.5 }}
-                            className="absolute inset-0"
-                        >
-                            <img
-                                src={img.url}
-                                alt={img.title}
-                                className="w-full h-full object-cover scale-105"
-                            />
-                        </motion.div>
-                    ))}
+                    <img
+                        src={HERO_IMAGE}
+                        alt="Professionals"
+                        className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-black/40" />
                 </div>
 
-                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center z-10">
+                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10 w-full">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
                     >
                         {/* Badge */}
-                        <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 py-1.5 text-sm text-white/90 mb-6">
-                            <Zap size={14} className="text-accent-400" />
-                            The #1 Premium Job Marketplace
+                        <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md border border-white/20 rounded-full px-4 py-1.5 text-sm text-white mb-4 shadow-sm">
+                            <Zap size={14} className="text-accent-300" />
+                            <span className="font-semibold text-white">The #1 Premium Job Marketplace</span>
                         </div>
 
-                        <h1 className="text-5xl md:text-7xl font-black font-display text-white leading-tight mb-6 drop-shadow-2xl">
+                        <h1 className="text-4xl md:text-6xl font-black font-display text-white leading-tight mb-4 drop-shadow-lg">
                             Find Your{' '}
                             <span className="relative">
-                                <span className="bg-gradient-to-r from-accent-300 to-primary-300 bg-clip-text text-transparent">
+                                <span className="bg-gradient-to-r from-accent-300 to-primary-300 bg-clip-text text-transparent drop-shadow-md">
                                     Dream Career
                                 </span>
-                                <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 300 12" fill="none">
-                                    <path d="M2 9C50 3 150 1 298 9" stroke="url(#u)" strokeWidth="3" strokeLinecap="round" />
-                                    <defs>
-                                        <linearGradient id="u" x1="0" y1="0" x2="300" y2="0">
-                                            <stop stopColor="#a78bfa" />
-                                            <stop offset="1" stopColor="#818cf8" />
-                                        </linearGradient>
-                                    </defs>
-                                </svg>
                             </span>
                         </h1>
 
-                        <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto mb-10 leading-relaxed drop-shadow-lg font-medium">
+                        <p className="text-base md:text-lg text-white/90 max-w-2xl mx-auto mb-6 leading-relaxed drop-shadow-md font-medium">
                             Connect with world-class companies and top talent. JOBY makes hiring beautiful,
                             fast, and transparent — for everyone.
                         </p>
 
-                        {/* Search bar */}
-                        <form onSubmit={handleSearch} className="max-w-2xl mx-auto mb-10">
-                            <div className="flex gap-3 bg-white/10 backdrop-blur-xl border border-white/30 rounded-2xl p-2 shadow-2xl">
-                                <div className="flex items-center gap-3 flex-1 px-3">
-                                    <Search size={20} className="text-white/70 shrink-0" />
-                                    <input
-                                        value={search}
-                                        onChange={e => setSearch(e.target.value)}
-                                        placeholder="Search jobs, companies, skills..."
-                                        className="flex-1 bg-transparent text-white placeholder-white/50 text-base focus:outline-none"
-                                    />
-                                </div>
-                                <button type="submit" className="btn bg-primary-600 hover:bg-primary-500 text-white font-bold px-8 py-3 rounded-xl transition-all shadow-lg shadow-primary-900/20">
-                                    Search Jobs
-                                </button>
-                            </div>
-                        </form>
-
                         {/* Quick links */}
-                        <div className="flex flex-wrap justify-center gap-2 text-sm text-white/70">
-                            <span className="font-semibold text-white/90">Popular:</span>
+                        <div className="flex flex-wrap justify-center gap-2 text-sm text-white/90 drop-shadow-md">
+                            <span className="font-semibold text-white">Popular:</span>
                             {['React Developer', 'Nurse', 'Designer', 'Project Manager'].map(t => (
                                 <button
                                     key={t}
                                     onClick={() => navigate(`/jobs?q=${encodeURIComponent(t)}`)}
-                                    className="text-white/80 hover:text-white hover:underline transition-colors px-2 py-0.5 rounded-lg hover:bg-white/10"
+                                    className="text-white hover:text-accent-200 transition-colors px-2 py-0.5 rounded-lg hover:bg-white/10"
                                 >
                                     {t}
                                 </button>

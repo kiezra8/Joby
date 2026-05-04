@@ -71,20 +71,41 @@ export default function Navbar({ darkMode, onToggleDark }) {
                         </span>
                     </Link>
 
-                    {/* Desktop nav links */}
-                    <div className="hidden md:flex items-center gap-1">
-                        {navLinks.map(link => (
-                            <Link
-                                key={link.to}
-                                to={link.to}
-                                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActive(link.to)
-                                        ? 'bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400'
-                                        : 'text-surface-600 dark:text-surface-300 hover:bg-surface-100 dark:hover:bg-surface-800 hover:text-surface-900 dark:hover:text-white'
-                                    }`}
-                            >
-                                {link.label}
-                            </Link>
-                        ))}
+                    {/* Desktop nav links & search */}
+                    <div className="hidden md:flex items-center gap-4 flex-1 ml-6">
+                        <div className="flex items-center gap-1">
+                            {navLinks.map(link => (
+                                <Link
+                                    key={link.to}
+                                    to={link.to}
+                                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActive(link.to)
+                                            ? 'bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400'
+                                            : 'text-surface-600 dark:text-surface-300 hover:bg-surface-100 dark:hover:bg-surface-800 hover:text-surface-900 dark:hover:text-white'
+                                        }`}
+                                >
+                                    {link.label}
+                                </Link>
+                            ))}
+                        </div>
+                        
+                        <form 
+                            onSubmit={(e) => {
+                                e.preventDefault()
+                                const q = e.target.search.value
+                                if (q.trim()) navigate(`/jobs?q=${encodeURIComponent(q)}`)
+                            }}
+                            className="relative flex-1 max-w-xs ml-4"
+                        >
+                            <input 
+                                type="text" 
+                                name="search"
+                                placeholder="Search jobs, skills, talent..." 
+                                className="w-full pl-9 pr-4 py-1.5 bg-surface-100 dark:bg-surface-800 border-transparent focus:border-primary-400 focus:bg-white dark:focus:bg-surface-900 rounded-lg text-sm transition-all"
+                            />
+                            <svg className="absolute left-3 top-1/2 -translate-y-1/2 text-surface-400 w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </form>
                     </div>
 
                     {/* Right side actions */}

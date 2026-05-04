@@ -68,13 +68,21 @@ export default function JobsPage() {
     const clearFilters = () => { setQ(''); setCategory(''); setType(''); setSort('newest') }
     const hasFilters = q || category || type || sort !== 'newest'
 
+    const activeCategoryLabel = useMemo(() => {
+        if (!category) return ''
+        const catObj = JOB_CATEGORIES.find(c => c.id === category)
+        return catObj ? catObj.label : ''
+    }, [category])
+
     return (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
             {/* Page header */}
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
                 <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-                    <h1 className="section-title">
-                        {tab === 'jobs' ? 'Browse Jobs' : 'Discover Talent'}
+                    <h1 className="section-title flex items-center gap-2">
+                        {tab === 'jobs' ? 'Browse' : 'Discover'}
+                        {activeCategoryLabel && <span className="text-primary-600 dark:text-primary-400">{activeCategoryLabel}</span>}
+                        {tab === 'jobs' ? 'Jobs' : 'Talent'}
                     </h1>
                     <p className="section-subtitle">
                         {tab === 'jobs' ? `${filteredJobs.length} opportunities available` : `${filteredTalent.length} professionals found`}
@@ -82,7 +90,7 @@ export default function JobsPage() {
                 </motion.div>
 
                 {/* Tab switcher */}
-                <div className="flex bg-surface-100 dark:bg-surface-800 p-1 rounded-2xl w-fit self-start">
+                <div className="flex bg-surface-100 dark:bg-surface-800 p-1 rounded-2xl w-fit self-start shadow-inner">
                     <button
                         onClick={() => { setTab('jobs'); setParams({ ...Object.fromEntries(params), tab: 'jobs' }) }}
                         className={`flex items-center gap-2 px-5 py-2 rounded-xl text-sm font-bold transition-all ${tab === 'jobs' ? 'bg-white dark:bg-surface-700 text-primary-600 dark:text-primary-400 shadow-sm' : 'text-surface-500'}`}

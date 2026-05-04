@@ -357,3 +357,57 @@ export const DUMMY_JOBS = [
         applicationCount: 19,
     },
 ]
+
+// Auto-generate missing data to ensure each category has at least 3 jobs and 3 professionals
+JOB_CATEGORIES.forEach(cat => {
+    const existingSeekers = DUMMY_USERS.filter(u => u.role === 'seeker' && u.category === cat.id);
+    const existingJobs = DUMMY_JOBS.filter(j => j.category === cat.id);
+    
+    for (let i = existingSeekers.length; i < 3; i++) {
+        DUMMY_USERS.push({
+            id: `auto-seek-${cat.id}-${i}`,
+            email: `auto-${cat.id}-${i}@example.com`,
+            password: 'password',
+            role: 'seeker',
+            name: `${cat.label} Professional ${i+1}`,
+            title: `Experienced ${cat.label} Specialist`,
+            bio: `Highly skilled professional in the ${cat.label} sector with a proven track record.`,
+            avatar: `https://images.unsplash.com/photo-${1500000000000 + (Math.random() * 100000000).toFixed(0)}?w=150&h=150&fit=crop`,
+            skills: [cat.label, 'Communication', 'Leadership', 'Problem Solving'],
+            experience: [{ company: 'Global Corp', role: 'Specialist', from: '2019', to: '2024' }],
+            education: [{ institution: 'State University', degree: `B.A. ${cat.label}`, year: '2019' }],
+            verified: true,
+            rating: Number((4.0 + (i * 0.3)).toFixed(1)),
+            reviewCount: 10 + i * 5,
+            cvUrl: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+            category: cat.id,
+            featured: false,
+            portfolioImages: [
+                'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400&h=300&fit=crop'
+            ],
+            location: 'Remote',
+            createdAt: new Date().toISOString(),
+        });
+    }
+
+    for (let i = existingJobs.length; i < 3; i++) {
+        DUMMY_JOBS.push({
+            id: `auto-job-${cat.id}-${i}`,
+            employerId: 'emp-001',
+            employerName: 'AutoTech Inc.',
+            employerLogo: 'https://ui-avatars.com/api/?name=AutoTech&background=6366f1&color=fff&size=128',
+            title: `${cat.label} Role Needed`,
+            category: cat.id,
+            type: 'full-time',
+            location: 'Remote',
+            salary: { min: 60000 + i*10000, max: 90000 + i*10000, currency: 'USD' },
+            description: `We are looking for a ${cat.label} specialist.\n\n**Requirements:**\n- 3+ years experience\n- Strong background in ${cat.label}`,
+            skills: [cat.label, 'Teamwork', 'Innovation'],
+            postedAt: new Date(Date.now() - i * 86400000).toISOString(),
+            deadline: '2025-12-31T00:00:00Z',
+            status: 'open',
+            featured: false,
+            applicationCount: 5 + i * 2,
+        });
+    }
+});
