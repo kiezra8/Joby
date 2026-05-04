@@ -3,7 +3,7 @@
  */
 import { useParams, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { ArrowLeft, CheckCircle, XCircle, ExternalLink, Star } from 'lucide-react'
+import { ArrowLeft, CheckCircle, XCircle, ExternalLink, Star, Zap, Maximize2 } from 'lucide-react'
 import { useAppStore } from '../../store/appStore'
 import { useAuthStore } from '../../store/authStore'
 import { timeAgo, getStatusConfig } from '../../utils/helpers'
@@ -45,9 +45,15 @@ export default function ApplicantsPage() {
 
             {apps.length === 0 ? (
                 <div className="card p-16 text-center">
-                    <div className="text-5xl mb-4">📭</div>
-                    <h3 className="text-lg font-semibold text-surface-700 dark:text-surface-300 mb-2">No applicants yet</h3>
-                    <p className="text-surface-400 text-sm">Share your job listing to attract candidates.</p>
+                    <div className="w-24 h-24 mx-auto mb-6 rounded-3xl bg-surface-100 dark:bg-surface-800 flex items-center justify-center">
+                        <img 
+                            src="https://images.unsplash.com/photo-1584824486509-112e4181ff6b?w=200&h=200&fit=crop" 
+                            alt="No applicants" 
+                            className="w-16 h-16 object-cover rounded-xl opacity-50 grayscale"
+                        />
+                    </div>
+                    <h3 className="text-lg font-bold text-surface-900 dark:text-white mb-2">No applicants yet</h3>
+                    <p className="text-surface-500 dark:text-surface-400 text-sm">Share your job listing to attract top talent.</p>
                 </div>
             ) : (
                 <div className="space-y-8">
@@ -148,6 +154,20 @@ function ApplicantCard({ app, index, onStatus, getUserById, readonly }) {
                     )}
 
                     <p className="text-xs text-surface-400 mt-3">Applied {timeAgo(app.appliedAt)}</p>
+
+                    {/* Portfolio Preview */}
+                    {seeker?.portfolioImages?.length > 0 && (
+                        <div className="portfolio-gallery">
+                            {seeker.portfolioImages.slice(0, 3).map((img, i) => (
+                                <div key={i} className="portfolio-item">
+                                    <img src={img} alt="Work preview" />
+                                    <div className="portfolio-overlay">
+                                        <Maximize2 size={16} className="text-white" />
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
 
                 {/* Actions */}

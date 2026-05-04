@@ -51,10 +51,16 @@ export default function EmployerDashboard() {
                         </div>
 
                         {myJobs.length === 0 ? (
-                            <div className="text-center py-10">
-                                <div className="text-4xl mb-3">📋</div>
-                                <p className="text-surface-500 dark:text-surface-400 text-sm mb-4">You haven't posted any jobs yet.</p>
-                                <Link to="/post-job" className="btn-primary btn mx-auto"><Plus size={16} /> Post a Job</Link>
+                            <div className="text-center py-12">
+                                <div className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-surface-100 dark:bg-surface-800 flex items-center justify-center">
+                                    <img 
+                                        src="https://images.unsplash.com/photo-1512314889357-e157c22f938d?w=200&h=200&fit=crop" 
+                                        alt="No jobs" 
+                                        className="w-12 h-12 object-cover rounded-lg opacity-40 grayscale"
+                                    />
+                                </div>
+                                <p className="text-surface-500 dark:text-surface-400 text-sm mb-6">You haven't posted any jobs yet.</p>
+                                <Link to="/post-job" className="btn-primary btn mx-auto px-8"><Plus size={16} /> Post a Job</Link>
                             </div>
                         ) : (
                             <div className="space-y-3">

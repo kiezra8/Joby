@@ -4,31 +4,40 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Search, ArrowRight, Star, Users, Briefcase, TrendingUp, CheckCircle, Zap } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { JOB_CATEGORIES } from '../data/dummyData'
 import { useAppStore } from '../store/appStore'
 import JobCard from '../components/jobs/JobCard'
 
-const STATS = [
-    { icon: <Briefcase size={22} />, value: '24K+', label: 'Jobs Posted' },
-    { icon: <Users size={22} />, value: '180K+', label: 'Professionals' },
-    { icon: <Star size={22} />, value: '98%', label: 'Satisfaction Rate' },
-    { icon: <TrendingUp size={22} />, value: '12K+', label: 'Hires This Month' },
+const HERO_IMAGES = [
+    { url: '/images/hero/hero_dev.png', title: 'Tech Professionals' },
+    { url: '/images/hero/hero_design.png', title: 'Creative Designers' },
+    { url: '/images/hero/hero_engineer.png', title: 'Skilled Engineers' },
+    { url: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=1920&h=1080&fit=crop', title: 'Business Leaders' },
 ]
 
 const FEATURES = [
-    { icon: '🎯', title: 'Smart Matching', desc: 'AI-powered recommendations tailored to your skills and preferences.' },
-    { icon: '⚡', title: 'Instant Apply', desc: 'Apply to any job in seconds with your saved profile.' },
-    { icon: '🔒', title: 'Verified Profiles', desc: 'Every employer and seeker is verified for your safety.' },
-    { icon: '💬', title: 'Direct Messaging', desc: 'Chat with employers and candidates in real-time.' },
+    { icon: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=100&h=100&fit=crop', title: 'Smart Matching', desc: 'AI-powered recommendations tailored to your skills and preferences.' },
+    { icon: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=100&h=100&fit=crop', title: 'Instant Apply', desc: 'Apply to any job in seconds with your saved profile.' },
+    { icon: 'https://images.unsplash.com/photo-1507679799987-c7377ec48696?w=100&h=100&fit=crop', title: 'Verified Profiles', desc: 'Every employer and seeker is verified for your safety.' },
+    { icon: 'https://images.unsplash.com/photo-1573164713988-8665fc963095?w=100&h=100&fit=crop', title: 'Direct Messaging', desc: 'Chat with employers and candidates in real-time.' },
 ]
 
 export default function LandingPage() {
     const [search, setSearch] = useState('')
+    const [currentHero, setCurrentHero] = useState(0)
     const navigate = useNavigate()
     const { jobs } = useAppStore()
     const featured = jobs.filter(j => j.featured).slice(0, 3)
+
+    // Carousel effect
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentHero(prev => (prev + 1) % HERO_IMAGES.length)
+        }, 5000)
+        return () => clearInterval(timer)
+    }, [])
 
     const handleSearch = (e) => {
         e.preventDefault()
@@ -38,35 +47,40 @@ export default function LandingPage() {
     return (
         <div className="overflow-x-hidden">
             {/* ===== HERO ===== */}
-            <section className="relative min-h-[90vh] flex items-center bg-hero-gradient overflow-hidden">
-                {/* Background decoration */}
+            <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-surface-950">
+                {/* Carousel Background */}
                 <div className="absolute inset-0">
-                    <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-500/20 rounded-full blur-3xl animate-pulse-slow" />
-                    <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent-500/15 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '2s' }} />
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary-600/10 rounded-full blur-3xl" />
+                    {HERO_IMAGES.map((img, idx) => (
+                        <motion.div
+                            key={idx}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: currentHero === idx ? 1 : 0 }}
+                            transition={{ duration: 1.5 }}
+                            className="absolute inset-0"
+                        >
+                            <img
+                                src={img.url}
+                                alt={img.title}
+                                className="w-full h-full object-cover scale-105"
+                            />
+                            <div className="carousel-overlay" />
+                        </motion.div>
+                    ))}
                 </div>
 
-                {/* Grid pattern overlay */}
-                <div className="absolute inset-0 opacity-5"
-                    style={{
-                        backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
-                        backgroundSize: '60px 60px'
-                    }}
-                />
-
-                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
+                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center z-10">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
                     >
                         {/* Badge */}
-                        <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5 text-sm text-white/80 mb-6">
+                        <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 py-1.5 text-sm text-white/90 mb-6">
                             <Zap size={14} className="text-accent-400" />
                             The #1 Premium Job Marketplace
                         </div>
 
-                        <h1 className="text-5xl md:text-7xl font-black font-display text-white leading-tight mb-6">
+                        <h1 className="text-5xl md:text-7xl font-black font-display text-white leading-tight mb-6 drop-shadow-2xl">
                             Find Your{' '}
                             <span className="relative">
                                 <span className="bg-gradient-to-r from-accent-300 to-primary-300 bg-clip-text text-transparent">
@@ -84,63 +98,47 @@ export default function LandingPage() {
                             </span>
                         </h1>
 
-                        <p className="text-lg md:text-xl text-white/65 max-w-2xl mx-auto mb-10 leading-relaxed">
+                        <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto mb-10 leading-relaxed drop-shadow-lg font-medium">
                             Connect with world-class companies and top talent. JOBY makes hiring beautiful,
                             fast, and transparent — for everyone.
                         </p>
 
                         {/* Search bar */}
                         <form onSubmit={handleSearch} className="max-w-2xl mx-auto mb-10">
-                            <div className="flex gap-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-2">
+                            <div className="flex gap-3 bg-white/10 backdrop-blur-xl border border-white/30 rounded-2xl p-2 shadow-2xl">
                                 <div className="flex items-center gap-3 flex-1 px-3">
-                                    <Search size={20} className="text-white/50 shrink-0" />
+                                    <Search size={20} className="text-white/70 shrink-0" />
                                     <input
                                         value={search}
                                         onChange={e => setSearch(e.target.value)}
                                         placeholder="Search jobs, companies, skills..."
-                                        className="flex-1 bg-transparent text-white placeholder-white/40 text-sm focus:outline-none"
+                                        className="flex-1 bg-transparent text-white placeholder-white/50 text-base focus:outline-none"
                                     />
                                 </div>
-                                <button type="submit" className="btn-primary btn shrink-0">
+                                <button type="submit" className="btn bg-primary-600 hover:bg-primary-500 text-white font-bold px-8 py-3 rounded-xl transition-all shadow-lg shadow-primary-900/20">
                                     Search Jobs
                                 </button>
                             </div>
                         </form>
 
                         {/* Quick links */}
-                        <div className="flex flex-wrap justify-center gap-2 text-sm text-white/50">
-                            <span>Popular:</span>
+                        <div className="flex flex-wrap justify-center gap-2 text-sm text-white/70">
+                            <span className="font-semibold text-white/90">Popular:</span>
                             {['React Developer', 'Nurse', 'Designer', 'Project Manager'].map(t => (
                                 <button
                                     key={t}
                                     onClick={() => navigate(`/jobs?q=${encodeURIComponent(t)}`)}
-                                    className="text-white/70 hover:text-white hover:underline transition-colors"
+                                    className="text-white/80 hover:text-white hover:underline transition-colors px-2 py-0.5 rounded-lg hover:bg-white/10"
                                 >
                                     {t}
                                 </button>
                             ))}
                         </div>
                     </motion.div>
-
-                    {/* Stats bar */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 40 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.3 }}
-                        className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16 max-w-4xl mx-auto"
-                    >
-                        {STATS.map((s, i) => (
-                            <div key={i} className="bg-white/10 backdrop-blur-sm border border-white/15 rounded-2xl p-5 text-center">
-                                <div className="flex justify-center mb-2 text-accent-300">{s.icon}</div>
-                                <div className="text-2xl font-black font-display text-white">{s.value}</div>
-                                <div className="text-xs text-white/50 mt-0.5">{s.label}</div>
-                            </div>
-                        ))}
-                    </motion.div>
                 </div>
 
                 {/* Wave divider */}
-                <div className="absolute bottom-0 left-0 right-0">
+                <div className="absolute bottom-0 left-0 right-0 z-20">
                     <svg viewBox="0 0 1440 80" fill="none" className="w-full">
                         <path d="M0 80L1440 80L1440 20C1200 70 840 10 720 30C600 50 240 80 0 40L0 80Z" className="fill-surface-50 dark:fill-surface-950" />
                     </svg>
@@ -169,13 +167,13 @@ export default function LandingPage() {
                             transition={{ delay: i * 0.04 }}
                         >
                             <Link
-                                to={`/jobs?category=${cat.id}`}
-                                className="card-hover p-5 flex flex-col items-center gap-2 text-center group"
-                            >
-                                <span className="text-3xl">{cat.icon}</span>
-                                <span className="text-xs font-semibold text-surface-700 dark:text-surface-300 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors leading-tight">
-                                    {cat.label}
-                                </span>
+                                 to={`/jobs?category=${cat.id}`}
+                                 className="card-hover p-5 flex flex-col items-center gap-2 text-center group"
+                             >
+                                 <img src={cat.icon} alt={cat.label} className="w-12 h-12 rounded-xl object-cover mb-1 group-hover:scale-110 transition-transform" />
+                                 <span className="text-xs font-bold text-surface-700 dark:text-surface-300 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors leading-tight">
+                                     {cat.label}
+                                 </span>
                             </Link>
                         </motion.div>
                     ))}
@@ -234,7 +232,9 @@ export default function LandingPage() {
                             transition={{ delay: i * 0.1 }}
                             className="card p-6 hover:border-primary-200 dark:hover:border-primary-800 transition-colors"
                         >
-                            <div className="text-4xl mb-4">{f.icon}</div>
+                            <div className="w-16 h-16 rounded-2xl overflow-hidden mb-5 ring-4 ring-primary-50 dark:ring-primary-900/20">
+                                <img src={f.icon} alt={f.title} className="w-full h-full object-cover" />
+                            </div>
                             <h3 className="font-bold text-surface-900 dark:text-white mb-2">{f.title}</h3>
                             <p className="text-sm text-surface-500 dark:text-surface-400 leading-relaxed">{f.desc}</p>
                         </motion.div>

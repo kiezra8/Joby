@@ -59,8 +59,11 @@ export default function JobCard({ job, index = 0 }) {
 
                     {/* Tags */}
                     <div className="flex flex-wrap gap-2 mb-4">
-                        <span className={`badge ${getCategoryColor(job.category)}`}>
-                            {category?.icon} {category?.label}
+                        <span className={`badge flex items-center gap-1.5 ${getCategoryColor(job.category)}`}>
+                            {category?.icon && (
+                                <img src={category.icon} alt={category.label} className="w-3.5 h-3.5 rounded-sm object-cover" />
+                            )}
+                            {category?.label}
                         </span>
                         <span className={`badge ${getTypeColor(job.type)}`}>
                             {job.type.replace('-', ' ')}
